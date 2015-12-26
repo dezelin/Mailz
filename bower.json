@@ -1,0 +1,19 @@
+{
+  "name": "Mailz",
+  "description": "",
+  "homepage": "",
+  "keywords": [
+  ],
+  "author": "",
+  "private": true,
+  "dependencies": {
+    "angular": "*",
+    "angular-bootstrap": "*",
+    "angular-messages": "*",
+    "angular-route": "*",
+    "bootstrap": "*",
+    "browserbox": "https://github.com/whiteout-io/browserbox#*",
+    "crypto-js": "*",
+    "font-awesome": "*"
+  }
+}

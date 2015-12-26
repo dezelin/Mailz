@@ -1,0 +1,11 @@
+.centered-on-screen {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.large-login-input {
+	font-size: 24px;
+	height: 2em;
+}

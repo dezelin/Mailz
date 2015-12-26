@@ -1,0 +1,46 @@
+<div class="container centered-on-screen">
+	<div class="row">
+		<div class="col-sm-6 col-sm-offset-3">
+			<form novalidate name="signupForm" role="form", ng-submit="formSubmit()">
+				<div class="form-group" ng-class="{ 'has-error': signupForm.yourName.$touched && signupForm.yourName.$invalid }">
+					<input autofocus type="text" name="yourName" class="form-control large-login-input" 
+						placeholder="Enter your name" ng-model="yourName"
+						required ng-minlength="1" ng-maxlength="20"
+						>
+					<div class="help-block" ng-messages="signupForm.yourName.$error" ng-if="signupForm.yourName.$touched">
+						<div ng-messages-include="app/partials/messages.html"></div>
+					</div>
+				</div>
+				<div class="form-group" ng-class="{ 'has-error': signupForm.email.$touched && signupForm.email.$invalid }">
+					<input type="email" name="email" class="form-control large-login-input" 
+						placeholder="Enter email" ng-model="email"
+						required ng-minlength="3"
+						>
+					<div class="help-block" ng-messages="signupForm.email.$error" ng-if="signupForm.email.$touched">
+						<div ng-messages-include="app/partials/messages.html"></div>
+					</div>
+				</div>
+				<div class="form-group" ng-class="{ 'has-error': signupForm.password.$touched && signupForm.password.$invalid }">
+					<input type="password" name="password" class="form-control large-login-input" 
+						placeholder="Enter password" ng-model="password"
+						required ng-minlength="8" ng-maxlength="20"
+						>
+					<div class="help-block" ng-messages="signupForm.password.$error" ng-if="signupForm.password.$touched">
+						<div ng-messages-include="app/partials/messages.html"></div>
+					</div>
+				</div>
+				<div class="form-group" ng-class="{ 'has-error': signupForm.verify.$touched && signupForm.verify.$invalid }">
+					<input type="password" name="verify" class="form-control large-login-input" 
+						placeholder="Verify password" ng-model="verifyPassword"
+						required ng-required="password" ng-minlength="8" ng-maxlength="20" field-match="password"
+						>
+					<div class="help-block" ng-messages="signupForm.verify.$error" ng-if="signupForm.verify.$touched">
+						<div ng-messages-include="app/partials/messages.html"></div>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-lg btn-info" ng-disabled="signupForm.$invalid">Sign up</button>
+				<button class="btn btn-lg btn-link" ng-click="go('/login')">Back to login</button>
+			</form>
+		</div>
+	</div>
+</div>
