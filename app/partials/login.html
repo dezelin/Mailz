@@ -1,7 +1,7 @@
 <div class="container centered-on-screen">
 	<div class="row">
 		<div class="col-sm-6 col-sm-offset-3">
-			<form novalidate name="loginForm" role="form" ng-submit="formSubmit()">
+			<form novalidate name="loginForm" role="form">
 				<div class="form-group" ng-class="{ 'has-error': loginForm.email.$touched && loginForm.email.$invalid }">
 					<input autofocus type="email" name="email" class="form-control large-login-input" 
 						placeholder="Enter email" ng-model="email"
@@ -20,7 +20,7 @@
 						<div ng-messages-include="app/partials/messages.html"></div>
 					</div>
 				</div>
-				<button type="submit" class="btn btn-lg btn-info" ng-disabled="loginForm.$invalid">Login</button>
+				<button type="submit" class="btn btn-lg btn-info" ng-disabled="loginForm.$invalid" ng-click="formSumbit()">Login</button>
 				<button class="btn btn-lg btn-link" ng-click="go('/signup')">Create account</button>
 			</form>
 		</div>
