@@ -1,7 +1,8 @@
 ; (function () {
 	'use strict'
 
-	angular.module('MailzApp').controller('NavbarCtrl', ['$scope', function ($scope) {
+	angular.module(APPLICATION_NAME)
+		.controller('NavbarCtrl', ['$scope', function ($scope) {
 
-	}]);
+		}]);
 })();

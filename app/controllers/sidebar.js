@@ -1,7 +1,8 @@
 ; (function () {
 	'use strict'
 
-	angular.module('MailzApp').controller('SidebarCtrl', ['$scope', function ($scope) {
+	angular.module(APPLICATION_NAME)
+		.controller('SidebarCtrl', ['$scope', function ($scope) {
 
-	}]);
+		}]);
 })();

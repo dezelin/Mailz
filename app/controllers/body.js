@@ -1,7 +1,8 @@
 ; (function () {
 	'use strict'
 
-	angular.module('MailzApp').controller('BodyCtrl', ['$scope', function ($scope) {
+	angular.module(APPLICATION_NAME)
+		.controller('BodyCtrl', ['$scope', function ($scope) {
 
-	}]);
+		}]);
 })();

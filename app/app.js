@@ -1,2 +1,3 @@
 
-var app = angular.module('MailzApp', ['ngRoute', 'ngMessages']);
+var APPLICATION_NAME = 'MailzApp';
+var app = angular.module(APPLICATION_NAME, ['ngRoute', 'ngMessages']);

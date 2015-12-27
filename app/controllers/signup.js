@@ -1,7 +1,7 @@
 ; (function () {
 	'use strict'
 
-	angular.module('MailzApp')
+	angular.module(APPLICATION_NAME)
 		.controller('SignupCtrl', ['$scope', '$log', '$location', 'authenticationService', 'sessionService',
 			function ($scope, $log, $location, authenticationService, sessionService) {
 				$scope.yourName = '';

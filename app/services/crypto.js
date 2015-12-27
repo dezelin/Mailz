@@ -1,7 +1,7 @@
 ; (function () {
 	'use strict'
 
-	angular.module('MailzApp')
+	angular.module(APPLICATION_NAME)
 		.service('cryptoService', ['$log', function ($log) {
 			var self = this;
 

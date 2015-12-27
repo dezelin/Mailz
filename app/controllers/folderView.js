@@ -1,7 +1,8 @@
 ; (function () {
 	'use strict'
 
-	angular.module('MailzApp').controller('FolderViewCtrl', ['$scope', function ($scope) {
+	angular.module(APPLICATION_NAME)
+		.controller('FolderViewCtrl', ['$scope', function ($scope) {
 
-	}]);
+		}]);
 })();
