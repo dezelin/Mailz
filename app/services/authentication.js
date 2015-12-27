@@ -7,7 +7,7 @@
 			function($log, $q, objectStoreService, cryptoService) {
 				var self = this;
 
-				self.LOGIN_FAILED = "Login failed.";
+				self.ACCESS_DENIED = "Authentication failure.";
 				self.USER_EXISTS = "User already exists.";
 				
 				// Login user
@@ -16,7 +16,7 @@
 					objectStoreService.findUserByEmail(user.email).then(function (foundUser) {
 						var hash = cryptoService.hash(user.password);
 						if (hash !== foundUser.password) {
-							p.reject(self.LOGIN_FAILED);
+							p.reject(self.ACCESS_DENIED);
 						} else {
 							foundUser.token = cryptoService.token();
 							p.resolve(foundUser);

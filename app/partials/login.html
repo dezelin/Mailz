@@ -4,7 +4,7 @@
 			<form novalidate name="loginForm" role="form" ng-submit="formSubmit()">
 				<div class="form-group" ng-class="{ 'has-error': loginForm.email.$touched && loginForm.email.$invalid }">
 					<input autofocus type="email" name="email" class="form-control large-login-input" 
-						placeholder="Enter email" ng-model="username"
+						placeholder="Enter email" ng-model="email"
 						required
 						>
 					<div class="help-block" ng-messages="loginForm.email.$error" ng-if="loginForm.email.$touched">
