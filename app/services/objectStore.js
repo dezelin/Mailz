@@ -1,16 +1,16 @@
 (function () {
 	'use strict'
-	
+
 	angular.module('MailzApp').service('objectStoreService', ['$log', '$q', function ($log, $q) {
-		
+
 		var self = this;
-		
-		self.USER_NOT_FOUND = -1;
-		
+
+		self.USER_NOT_FOUND = "User not found.";
+
 		self.db = null;
-		
+
 		self.onerror = function (errorCode) {
-			$log.error('Database error ' + errorCode);
+			$log.error('Database error: ' + errorCode.message);
 		}
 
 		self.open = function () {
@@ -19,22 +19,22 @@
 			if (self.isOpened()) {
 				p.resolve(self.db);
 				return p.promise;
-			} 
+			}
 
 			var request = indexedDB.open('MailzDB', 1);
-			
+
 			request.onerror = function (event) {
 				var errorCode = event.target.errorCode;
 				p.reject(errorCode);
 				self.onerror(errorCode);
 			}
-			
+
 			request.onsuccess = function (event) {
 				self.db = event.target.result;
 				self.db.onerror = self.onerror;
 				p.resolve(self.db);
 			}
-			
+
 			request.onupgradeneeded = function (event) {
 				var db = event.target.result;
 				self.db = db;
@@ -43,14 +43,13 @@
 				// Create users object store for this database
 				var objectStore = db.createObjectStore("users", { autoIncrement: true });
 				objectStore.createIndex("email", "email", { unique: true });
-				objectStore.createIndex("password", "password", { unique: true });
 				objectStore.createIndex("token", "token", { unique: true });
-				
+
 				objectStore.transaction.onsuccess = function (event) {
 					var db = event.target.result;
-					p.resolve(db);				
+					p.resolve(db);
 				}
-				
+
 				objectStore.transaction.onerror = function (event) {
 					var errorCode = event.target.result;
 					p.reject(errorCode);
@@ -59,11 +58,11 @@
 
 			return p.promise;
 		}
-		
-		self.isOpened = function() {
+
+		self.isOpened = function () {
 			return self.db != null;
 		}
-		
+
 		self.addUser = function (user) {
 			var p = $q.defer();
 			self.open().then(function (db) {
@@ -75,23 +74,24 @@
 					p.resolve(userId);
 				}
 				request.onerror = function (event) {
-					var errorCode = event.target.result; 
+					var errorCode = event.target.error;
 					p.reject(errorCode);
 				}
 			}, function (errorCode) {
 				p.reject(errorCode);
 			});
-			
+
 			return p.promise;
 		}
-		
+
 		self.findUserByEmail = function (email) {
 			var p = $q.defer();
 			self.open().then(function (db) {
 				var transaction = db.transaction(['users'], 'readwrite');
 				var objectStore = transaction.objectStore('users');
 				var index = objectStore.index('email');
-				index.get(email).onsuccess = function (event) {
+				var request = index.get(email);
+				request.onsuccess = function (event) {
 					var user = event.target.result;
 					if (!user) {
 						p.reject(self.USER_NOT_FOUND);
@@ -99,11 +99,15 @@
 						p.resolve(user);
 					}
 				}
-				
+				request.onerror = function (event) {
+					var errorCode = event.target.error;
+					p.reject(errorCode);
+				}
+
 			}, function (errorCode) {
 				p.reject(errorCode);
 			});
-			
+
 			return p.promise;
 		}
 	}]);

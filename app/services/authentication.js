@@ -7,8 +7,8 @@
 			function($log, $q, objectStoreService, cryptoService) {
 				var self = this;
 
-				self.LOGIN_FAILED = -1;
-				self.SIGNUP_FAILED = -2;
+				self.LOGIN_FAILED = "Login failed.";
+				self.USER_EXISTS = "User already exists.";
 				
 				// Login user
 				self.login = function (user) {
@@ -33,7 +33,7 @@
 					var p = $q.defer();
 					objectStoreService.findUserByEmail(user.email).then(function (user) {
 						// User already exists
-						p.reject(self.SIGNUP_FAILED);
+						p.reject(self.USER_EXISTS);
 					}, function (errorCode) {
 						if (errorCode == null || errorCode != objectStoreService.USER_NOT_FOUND) {
 							p.reject(errorCode);

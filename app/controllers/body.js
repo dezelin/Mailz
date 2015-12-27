@@ -1,7 +1,7 @@
-(function () {
+; (function () {
 	'use strict'
-	
-	angular.module('MailzApp').controller('BodyCtrl', ['$scope', function($scope) {
-				
+
+	angular.module('MailzApp').controller('BodyCtrl', ['$scope', function ($scope) {
+
 	}]);
 })();
