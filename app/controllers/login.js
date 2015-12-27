@@ -1,8 +1,8 @@
 (function () {
 	'use strict'
 	
-	angular.module('MailzApp').controller('LoginCtrl', ['$scope', '$location', 'Authentication', 
-	function ($scope, $location, $authentication) {
+	angular.module('MailzApp').controller('LoginCtrl', ['$scope', '$location', 
+	function ($scope, $location) {
 		$scope.username = ''
 		$scope.password = ''
 	
@@ -11,7 +11,7 @@
 		}
 		
 		$scope.formSubmit = function () {
-			console.log($authentication.authenticate($scope.password))
+			
 		}
 	}]);
 })();

@@ -10,10 +10,11 @@
     "angular": "*",
     "angular-bootstrap": "*",
     "angular-messages": "*",
+    "angular-mocks": "*",
     "angular-route": "*",
     "bootstrap": "*",
     "browserbox": "https://github.com/whiteout-io/browserbox#*",
     "crypto-js": "*",
-    "font-awesome": "*"
+    "jasmine": "*"
   }
 }

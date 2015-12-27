@@ -1,18 +1,23 @@
 (function () {
 	'use strict'
 	
-	angular.module('MailzApp').service('ObjectStore', ['$scope', '$log', '$q', function ($scope, $log, $q) {
-		$scope.db = null;
+	angular.module('MailzApp').service('objectStoreService', ['$log', '$q', function ($log, $q) {
 		
-		$scope.onerror = function (errorCode) {
+		var self = this;
+		
+		self.USER_NOT_FOUND = -1;
+		
+		self.db = null;
+		
+		self.onerror = function (errorCode) {
 			$log.error('Database error ' + errorCode);
 		}
 
-		$scope.open = function () {
+		self.open = function () {
 			var p = $q.defer();
 
-			if ($scope.isOpened()) {
-				p.resolve($scope.db);
+			if (self.isOpened()) {
+				p.resolve(self.db);
 				return p.promise;
 			} 
 
@@ -21,33 +26,84 @@
 			request.onerror = function (event) {
 				var errorCode = event.target.errorCode;
 				p.reject(errorCode);
-				$scope.onerror(errorCode);
+				self.onerror(errorCode);
 			}
 			
 			request.onsuccess = function (event) {
-				$scope.db = event.target.result;
-				$scope.db.onerror = $scope.onerror;
-				p.resolve($scope.db);
+				self.db = event.target.result;
+				self.db.onerror = self.onerror;
+				p.resolve(self.db);
 			}
 			
 			request.onupgradeneeded = function (event) {
 				var db = event.target.result;
-				$scope.db.onerror = $scope.onerror;
+				self.db = db;
+				self.db.onerror = self.onerror;
 				
 				// Create users object store for this database
-				var store = db.createObjectStore("users", { autoIncrement: true });
-				store.createIndex("email", "email", { unique: true });
-				store.createIndex("password", "password", { unique: true });
-
-				$scope.db = db;
-				p.resolve(db);				
+				var objectStore = db.createObjectStore("users", { autoIncrement: true });
+				objectStore.createIndex("email", "email", { unique: true });
+				objectStore.createIndex("password", "password", { unique: true });
+				
+				objectStore.transaction.onsuccess = function (event) {
+					var db = event.target.result;
+					p.resolve(db);				
+				}
+				
+				objectStore.transaction.onerror = function (event) {
+					var errorCode = event.target.result;
+					p.reject(errorCode);
+				}
 			}
 
 			return p.promise;
 		}
 		
-		$scope.isOpened = function() {
-			return $scope.db != null;
+		self.isOpened = function() {
+			return self.db != null;
+		}
+		
+		self.addUser = function (user) {
+			var p = $q.defer();
+			self.open().then(function (db) {
+				var transaction = db.transaction(['users'], 'readwrite');
+				var objectStore = transaction.objectStore('users');
+				var request = objectStore.add(user);
+				request.onsuccess = function (event) {
+					var userId = event.target.result;
+					p.resolve(userId);
+				}
+				request.onerror = function (event) {
+					var errorCode = event.target.result; 
+					p.reject(errorCode);
+				}
+			}, function (errorCode) {
+				p.reject(errorCode);
+			});
+			
+			return p.promise;
+		}
+		
+		self.findUserByEmail = function (email) {
+			var p = $q.defer();
+			self.open().then(function (db) {
+				var transaction = db.transaction(['users'], 'readwrite');
+				var objectStore = transaction.objectStore('users');
+				var index = objectStore.index('email');
+				index.get(email).onsuccess = function (event) {
+					var user = event.target.result;
+					if (!user) {
+						p.reject(self.USER_NOT_FOUND);
+					} else {
+						p.resolve(user);
+					}
+				}
+				
+			}, function (errorCode) {
+				p.reject(errorCode);
+			});
+			
+			return p.promise;
 		}
 	}]);
-});
+})();
