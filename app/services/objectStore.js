@@ -44,6 +44,7 @@
 				var objectStore = db.createObjectStore("users", { autoIncrement: true });
 				objectStore.createIndex("email", "email", { unique: true });
 				objectStore.createIndex("password", "password", { unique: true });
+				objectStore.createIndex("token", "token", { unique: true });
 				
 				objectStore.transaction.onsuccess = function (event) {
 					var db = event.target.result;
