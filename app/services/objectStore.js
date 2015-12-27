@@ -1,114 +1,116 @@
-(function () {
-	'use strict'
+/* global angular */
+/* global APPLICATION_NAME */
+/* global indexedDB */
+(function() {
+  'use strict';
 
-	angular.module(APPLICATION_NAME)
-		.service('objectStoreService', ['$log', '$q', function ($log, $q) {
-			var self = this;
+  angular.module(APPLICATION_NAME)
+    .service('objectStoreService', ['$log', '$q', function($log, $q) {
+      var self = this;
 
-			self.USER_NOT_FOUND = "User not found.";
+      self.USER_NOT_FOUND = 'User not found.';
 
-			self.db = null;
+      self.db = null;
 
-			self.onerror = function (errorCode) {
-				$log.error('Database error: ' + errorCode.message);
-			}
+      self.onerror = function(errorCode) {
+        $log.error('Database error: ' + errorCode.message);
+      };
 
-			self.open = function () {
-				var p = $q.defer();
+      self.open = function() {
+        var p = $q.defer();
 
-				if (self.isOpened()) {
-					p.resolve(self.db);
-					return p.promise;
-				}
+        if (self.isOpened()) {
+          p.resolve(self.db);
+          return p.promise;
+        }
 
-				var request = indexedDB.open('MailzDB', 1);
+        var request = indexedDB.open('MailzDB', 1);
 
-				request.onerror = function (event) {
-					var errorCode = event.target.errorCode;
-					p.reject(errorCode);
-					self.onerror(errorCode);
-				}
+        request.onerror = function(event) {
+          var errorCode = event.target.errorCode;
+          p.reject(errorCode);
+          self.onerror(errorCode);
+        };
 
-				request.onsuccess = function (event) {
-					self.db = event.target.result;
-					self.db.onerror = self.onerror;
-					p.resolve(self.db);
-				}
+        request.onsuccess = function(event) {
+          self.db = event.target.result;
+          self.db.onerror = self.onerror;
+          p.resolve(self.db);
+        };
 
-				request.onupgradeneeded = function (event) {
-					var db = event.target.result;
-					self.db = db;
-					self.db.onerror = self.onerror;
-				
-					// Create users object store for this database
-					var objectStore = db.createObjectStore("users", { autoIncrement: true });
-					objectStore.createIndex("email", "email", { unique: true });
-					objectStore.createIndex("token", "token", { unique: true });
+        request.onupgradeneeded = function(event) {
+          var db = event.target.result;
+          self.db = db;
+          self.db.onerror = self.onerror;
 
-					objectStore.transaction.onsuccess = function (event) {
-						var db = event.target.result;
-						p.resolve(db);
-					}
+          // Create users object store for this database
+          var objectStore = db.createObjectStore('users', {autoIncrement: true});
+          objectStore.createIndex('email', 'email', {unique: true});
+          objectStore.createIndex('token', 'token', {unique: true});
 
-					objectStore.transaction.onerror = function (event) {
-						var errorCode = event.target.result;
-						p.reject(errorCode);
-					}
-				}
+          objectStore.transaction.onsuccess = function(event) {
+            var db = event.target.result;
+            p.resolve(db);
+          };
 
-				return p.promise;
-			}
+          objectStore.transaction.onerror = function(event) {
+            var errorCode = event.target.result;
+            p.reject(errorCode);
+          };
+        };
 
-			self.isOpened = function () {
-				return self.db != null;
-			}
+        return p.promise;
+      };
 
-			self.addUser = function (user) {
-				var p = $q.defer();
-				self.open().then(function (db) {
-					var transaction = db.transaction(['users'], 'readwrite');
-					var objectStore = transaction.objectStore('users');
-					var request = objectStore.add(user);
-					request.onsuccess = function (event) {
-						var userId = event.target.result;
-						p.resolve(userId);
-					}
-					request.onerror = function (event) {
-						var errorCode = event.target.error;
-						p.reject(errorCode);
-					}
-				}, function (errorCode) {
-					p.reject(errorCode);
-				});
+      self.isOpened = function() {
+        return self.db !== null;
+      };
 
-				return p.promise;
-			}
+      self.addUser = function(user) {
+        var p = $q.defer();
+        self.open().then(function(db) {
+          var transaction = db.transaction(['users'], 'readwrite');
+          var objectStore = transaction.objectStore('users');
+          var request = objectStore.add(user);
+          request.onsuccess = function(event) {
+            var userId = event.target.result;
+            p.resolve(userId);
+          };
+          request.onerror = function(event) {
+            var errorCode = event.target.error;
+            p.reject(errorCode);
+          };
+        }, function(errorCode) {
+          p.reject(errorCode);
+        });
 
-			self.findUserByEmail = function (email) {
-				var p = $q.defer();
-				self.open().then(function (db) {
-					var transaction = db.transaction(['users'], 'readwrite');
-					var objectStore = transaction.objectStore('users');
-					var index = objectStore.index('email');
-					var request = index.get(email);
-					request.onsuccess = function (event) {
-						var user = event.target.result;
-						if (!user) {
-							p.reject(self.USER_NOT_FOUND);
-						} else {
-							p.resolve(user);
-						}
-					}
-					request.onerror = function (event) {
-						var errorCode = event.target.error;
-						p.reject(errorCode);
-					}
+        return p.promise;
+      };
 
-				}, function (errorCode) {
-					p.reject(errorCode);
-				});
+      self.findUserByEmail = function(email) {
+        var p = $q.defer();
+        self.open().then(function(db) {
+          var transaction = db.transaction(['users'], 'readwrite');
+          var objectStore = transaction.objectStore('users');
+          var index = objectStore.index('email');
+          var request = index.get(email);
+          request.onsuccess = function(event) {
+            var user = event.target.result;
+            if (user) {
+              p.resolve(user);
+            } else {
+              p.reject(self.USER_NOT_FOUND);
+            }
+          };
+          request.onerror = function(event) {
+            var errorCode = event.target.error;
+            p.reject(errorCode);
+          };
+        }, function(errorCode) {
+          p.reject(errorCode);
+        });
 
-				return p.promise;
-			}
-		}]);
+        return p.promise;
+      };
+    }]);
 })();
