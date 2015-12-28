@@ -3,7 +3,7 @@
 		<div class="col-sm-6 col-sm-offset-3">
 			<form novalidate name="loginForm" role="form">
 				<div class="form-group" ng-class="{ 'has-error': loginForm.email.$touched && loginForm.email.$invalid }">
-					<input autofocus type="email" name="email" class="form-control large-login-input" 
+					<input autofocus type="email" name="email" class="form-control large-login-input"
 						placeholder="Enter email" ng-model="email"
 						required
 						>
@@ -12,7 +12,7 @@
 					</div>
 				</div>
 				<div class="form-group" ng-class="{ 'has-error': loginForm.password.$touched && loginForm.password.$invalid }">
-					<input type="password" name="password" class="form-control large-login-input" 
+					<input type="password" name="password" class="form-control large-login-input"
 						placeholder="Enter password" ng-model="password"
 						required ng-minlength="8" ng-maxlength="20"
 						>
@@ -20,7 +20,7 @@
 						<div ng-messages-include="app/partials/messages.html"></div>
 					</div>
 				</div>
-				<button type="submit" class="btn btn-lg btn-info" ng-disabled="loginForm.$invalid" ng-click="formSumbit()">Login</button>
+				<button type="submit" class="btn btn-lg btn-info" ng-disabled="loginForm.$invalid" ng-click="formSubmit()">Login</button>
 				<button class="btn btn-lg btn-link" ng-click="go('/signup')">Create account</button>
 			</form>
 		</div>

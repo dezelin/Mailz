@@ -3,20 +3,25 @@
 <html lang="en" ng-app="MailzApp" ng-csp>
 <head>
   <title>Mailz</title>
-  
+
   <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
   <script type="text/javascript" src="bower_components/angular-messages/angular-messages.min.js"></script>
   <script type="text/javascript" src="bower_components/angular-route/angular-route.min.js"></script>
-  <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script> 
-  
+  <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+
   <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="bower_components/crypto-js/crypto-js.js"></script>
+
+  <script type="text/javascript" src="bower_components/browserbox/src/browserbox.js"></script>
+  <Script type="text/javascript" src="bower_components/browserbox/src/browserbox-imap.js"></script>
 
   <script type="text/javascript" src="app/app.js"></script>
   <script type="text/javascript" src="app/routes.js"></script>
   <script type="text/javascript" src="app/services/authentication.js"></script>
   <script type="text/javascript" src="app/services/crypto.js"></script>
+  <script type="text/javascript" src="app/services/imap.js"></script>
+  <script type="text/javascript" src="app/services/modals.js"></script>
   <script type="text/javascript" src="app/services/objectStore.js"></script>
   <script type="text/javascript" src="app/services/session.js"></script>
   <script type="text/javascript" src="app/controllers/body.js"></script>
@@ -24,10 +29,11 @@
   <script type="text/javascript" src="app/controllers/login.js"></script>
   <script type="text/javascript" src="app/controllers/folderView.js"></script>
   <script type="text/javascript" src="app/controllers/navbar.js"></script>
+  <script type="text/javascript" src="app/controllers/options.js"></script>
   <script type="text/javascript" src="app/controllers/sidebar.js"></script>
   <script type="text/javascript" src="app/controllers/signup.js"></script>
   <script type="text/javascript" src="app/directives/fieldMatch.js"></script>
-  
+
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"></link>
   <link rel="stylesheet" href="styles.css">
 </head>

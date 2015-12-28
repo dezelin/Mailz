@@ -1,0 +1,47 @@
+<div ng-controller="OptionsAccountsCtrl">
+  <div class="container-fluid" style="padding-top: 16px; padding-bottom: 16px;">
+    <div class="row">
+
+      <!-- Left side -->
+      <div class="col-lg-4" style="padding-top: 16px; padding-bottom: 16px;">
+
+        <!-- List of email accounts -->
+        <uib-accordion>
+          <uib-accordion-group ng-repeat="account in accounts.list" is-open="account.open">
+            <uib-accordion-heading>
+              {{account.name}}
+              <i class="pull-right glyphicon"
+                ng-class="{'glyphicon-chevron-down': account.open, 'glyphicon-chevron-up': !account.open}"
+                ng-click="broadcastReload()"
+                >
+              </i>
+            </uib-accordion-heading>
+            <ul class="nav nav-pills nav-stacked">
+              <li role="menuitem" class="nav-item" ng-repeat="page in pageTemplates" ng-class="{ 'active': $index === accounts.pageIdx }">
+                <a href="#" class="nav-link" ng-click="accounts.clickPageLink($index)">{{page.name}}</a>
+              </li>
+            </ul>
+          </uib-accordion-group>
+        </uib-accordion>
+
+        <!-- Dropdown action button -->
+        <div class="btn-group" uib-dropdown>
+          <button id="action-button" type="button" class="btn btn-primary" uib-dropdown-toggle>
+            Actions <span class="caret"></span>
+          </button>
+          <ul class="uib-dropdown-menu" role="menu" aria-labelledby="action-button">
+            <li role="menuitem" ng-repeat="action in actionButton.actions" ng-class="{ 'disabled': !action.enabled() }">
+              <a href="#" ng-click="actionButton.click($index)">{{action.name}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Right side pages -->
+      <div id="subpages" class="col-lg-8" style="padding-top: 16px; padding-bottom: 16px;>
+        <!-- Only one will be enabled based on accordion menu selection -->
+        <div ng-if="accounts.pageIdx !== -1" ng-include="selectedPageTemplate()"></div>
+      </div>
+    </div>
+  </div>
+</div>

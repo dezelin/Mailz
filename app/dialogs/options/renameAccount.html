@@ -1,0 +1,19 @@
+<div>
+  <div class="modal-header">
+    <h4>Rename email account</h4>
+  </div>
+  <div class="modal-body">
+    <form role="form" name="form">
+      <div class="form-group">
+        <label>New email account name</label>
+        <input autofocus type="text" placeholder="Enter email account name" class="form-control"
+          ng-click="this.select()" ng-model="accountName" ng-min="1" ng-max="20"
+          >
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-success" ng-disabled="!isValid()" ng-click="ok()">Ok</button>
+    <button class="btn btn-danger" ng-click="cancel()">Cancel</button>
+  </div>
+</div>

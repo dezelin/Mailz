@@ -1,0 +1,13 @@
+<div>
+  <div class="modal-body">
+    <uib-tabset>
+      <uib-tab ng-repeat="t in tabs" heading="{{t.title}}" active="t.active">
+        <div ng-if="t.active" ng-include="t.templateUrl"></div>
+      </uib-tab>
+    </uib-tabset>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-success">Ok</button>
+    <button class="btn btn-danger">Cancel</button>
+  </div>
+</div>
