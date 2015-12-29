@@ -13,6 +13,7 @@
     "angular-mocks": "*",
     "angular-route": "*",
     "bootstrap": "*",
+    "bootstrap-select": "*",
     "browserbox": "https://github.com/whiteout-io/browserbox.git",
     "crypto-js": "*",
     "jasmine": "*"

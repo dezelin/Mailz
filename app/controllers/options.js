@@ -128,13 +128,35 @@
       }]);
 
   angular.module(APPLICATION_NAME)
-    .controller('OptionsAccountsIMAPCtrl', ['$scope', '$log', function($scope, $log) {
+    .controller('OptionsAccountsIMAPCtrl', ['$scope', '$log', 'imapService', function($scope, $log, imapService) {
+      $scope.securityProtocols = imapService.availableSecurityProtocols();
+      $scope.authenticationMethods = imapService.availableAuthenticationMethods();
+
+      $scope.account = $scope.account || {};
+      $scope.account.imap = $scope.account.imap || {};
+      $scope.account.imap.protocol = $scope.account.imap.protocol || $scope.securityProtocols[0].name;
+
+      $scope.$watch('account.imap.protocol', function(newValue, oldValue) {
+        if (oldValue === undefined || newValue === undefined ||
+          oldValue === newValue) {
+          return;
+        }
+
+        // $scope.account.imap.protocol has already been set to the new value in the view
+        for (var i = 0; i < $scope.securityProtocols.length; ++i) {
+          if ($scope.securityProtocols[i].name === newValue) {
+            $scope.account.imap.port = $scope.securityProtocols[i].port;
+            break;
+          }
+        }
+      });
+
       $scope.reload = function() {
         // Schedule update for the next tick
         setTimeout(function() {
           $scope.$apply(function() {
             $scope.account = $scope.accounts.list[$scope.accounts.selectedAccount()];
-            $scope.account.imap = $scope.account.imap || {};
+            $scope.account.imap = $scope.account.imap || imapService.defaultSettings();
           });
         }, 0);
       };
