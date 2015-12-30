@@ -1,10 +1,14 @@
-/* global angular */
-/* global APPLICATION_NAME */
-(function() {
-  'use strict';
+'use strict';
 
-  angular.module(APPLICATION_NAME)
-    .controller('SidebarCtrl', ['$scope', function($scope) {
+/* global define */
 
-    }]);
-})();
+define(
+  [
+    'app'
+  ],
+
+  function(app) {
+    app.register.controller('SidebarController', function() {
+
+    });
+  });

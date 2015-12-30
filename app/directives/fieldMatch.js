@@ -1,10 +1,14 @@
-/* global angular */
-/* global APPLICATION_NAME */
-(function() {
-  'use strict';
+'use strict';
 
-  angular.module(APPLICATION_NAME)
-    .directive('fieldMatch', function() {
+/* global define */
+
+define(
+  [
+    'app'
+  ],
+
+  function(app) {
+    app.register.directive('fieldMatch', function() {
       return {
         restrict: 'A',
         scope: true,
@@ -27,4 +31,4 @@
         }
       };
     });
-})();
+  });

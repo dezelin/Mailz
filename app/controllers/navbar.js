@@ -1,10 +1,18 @@
-/* global angular */
-/* global APPLICATION_NAME */
-(function() {
-  'use strict';
+'use strict';
 
-  angular.module(APPLICATION_NAME)
-    .controller('NavbarCtrl', ['$scope', function($scope) {
+/* global define */
 
-    }]);
-})();
+define(
+  [
+    'app'
+  ],
+
+  function(app) {
+    app.register.controller('NavbarController',
+      [
+        '$scope',
+
+        function($scope) {
+
+        }]);
+  });

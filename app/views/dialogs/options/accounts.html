@@ -1,4 +1,4 @@
-<div ng-controller="OptionsAccountsCtrl">
+<div ng-controller="OptionsAccountsController">
   <div class="container-fluid" style="padding-top: 16px; padding-bottom: 16px;">
     <div class="row">
 
@@ -35,6 +35,8 @@
             </li>
           </ul>
         </div>
+        <!-- Test button -->
+        <button type="button" class="btn btn-primary" ng-if="accounts.isPageTestable()" ng-click="broadcastTest()">Test</button>
       </div>
 
       <!-- Right side pages -->

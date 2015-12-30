@@ -7,15 +7,26 @@
   "author": "",
   "private": true,
   "dependencies": {
+    "addressparser": "*",
     "angular": "*",
     "angular-bootstrap": "*",
     "angular-messages": "*",
     "angular-mocks": "*",
     "angular-route": "*",
+    "axe-core": "*",
     "bootstrap": "*",
     "bootstrap-select": "*",
     "browserbox": "https://github.com/whiteout-io/browserbox.git",
     "crypto-js": "*",
-    "jasmine": "*"
+    "forge": "https://github.com/digitalbazaar/forge.git",
+    "imapclient": "https://github.com/whiteout-io/imap-client.git",
+    "imapHandler": "*",
+    "jasmine": "*",
+    "mimefuncs": "*",
+    "requirejs": "*",
+    "requirejs-domready": "*",
+    "stringencoding": "https://github.com/whiteout-io/stringencoding.git",
+    "tcp-socket": "https://github.com/whiteout-io/tcp-socket.git",
+    "utf7": "*"
   }
 }

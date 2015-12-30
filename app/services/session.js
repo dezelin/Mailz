@@ -1,10 +1,14 @@
-/* global angular */
-/* global APPLICATION_NAME */
-(function() {
-  'use strict';
+'use strict';
 
-  angular.module(APPLICATION_NAME)
-    .service('sessionService', ['$log', function($log) {
+/* global define */
+
+define(
+  [
+    'app'
+  ],
+
+  function(app) {
+    app.register.service('sessionService', function() {
       var self = this;
 
       self.user = {};
@@ -16,5 +20,5 @@
       self.getUser = function() {
         return self.user;
       };
-    }]);
-})();
+    });
+  });

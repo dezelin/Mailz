@@ -1,46 +1,18 @@
 <!DOCTYPE html>
 
-<html lang="en" ng-app="MailzApp" ng-csp>
+<html lang="en" ng-csp>
+
 <head>
   <title>Mailz</title>
-
-  <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
-  <script type="text/javascript" src="bower_components/angular-messages/angular-messages.min.js"></script>
-  <script type="text/javascript" src="bower_components/angular-route/angular-route.min.js"></script>
-  <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-
-  <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
-  <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="bower_components/crypto-js/crypto-js.js"></script>
-
-  <script type="text/javascript" src="bower_components/browserbox/src/browserbox.js"></script>
-  <script type="text/javascript" src="bower_components/browserbox/src/browserbox-imap.js"></script>
-  <script type="text/javascript" src="bower_components/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-
-  <script type="text/javascript" src="app/app.js"></script>
-  <script type="text/javascript" src="app/routes.js"></script>
-  <script type="text/javascript" src="app/services/authentication.js"></script>
-  <script type="text/javascript" src="app/services/crypto.js"></script>
-  <script type="text/javascript" src="app/services/imap.js"></script>
-  <script type="text/javascript" src="app/services/modals.js"></script>
-  <script type="text/javascript" src="app/services/objectStore.js"></script>
-  <script type="text/javascript" src="app/services/session.js"></script>
-  <script type="text/javascript" src="app/controllers/body.js"></script>
-  <script type="text/javascript" src="app/controllers/inbox.js"></script>
-  <script type="text/javascript" src="app/controllers/login.js"></script>
-  <script type="text/javascript" src="app/controllers/folderView.js"></script>
-  <script type="text/javascript" src="app/controllers/navbar.js"></script>
-  <script type="text/javascript" src="app/controllers/options.js"></script>
-  <script type="text/javascript" src="app/controllers/sidebar.js"></script>
-  <script type="text/javascript" src="app/controllers/signup.js"></script>
-  <script type="text/javascript" src="app/directives/fieldMatch.js"></script>
-
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="bower_components/bootstrap-select/dist/css/bootstrap-select.min.css">
+  <link rel="stylesheet" href="app/components/angular/angular-csp.css">
+  <link rel="stylesheet" href="app/components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="app/components/angular-bootstrap/ui-bootstrap-csp.css">
   <link rel="stylesheet" href="styles.css">
 </head>
 
-<body ng-controller="BodyCtrl">
+<body>
   <div ng-view></div>
+  <script src="app/components/requirejs/require.js" data-main="app/main.js"></script>
 </body>
+
 </html>

@@ -1,19 +1,27 @@
-/* global angular */
-/* global APPLICATION_NAME */
-/* global CryptoJS */
-(function() {
-  'use strict';
+'use strict';
 
-  angular.module(APPLICATION_NAME)
-    .service('cryptoService', ['$log', function($log) {
-      var self = this;
+/* global define */
 
-      self.hash = function(message) {
-        return CryptoJS.SHA256(message).toString(CryptoJS.enc.Hex);
-      };
+define(
+  [
+    'app',
+    'crypto-js'
+  ],
 
-      self.token = function() {
-        return CryptoJS.lib.WordArray.random(32).toString(CryptoJS.enc.Hex);
-      };
-    }]);
-})();
+  function(app, cryptoJs) {
+    app.register.service('cryptoService',
+      [
+        '$log',
+
+        function($log) {
+          var self = this;
+
+          self.hash = function(message) {
+            return cryptoJs.SHA256(message).toString(cryptoJs.enc.Hex);
+          };
+
+          self.token = function() {
+            return cryptoJs.lib.WordArray.random(32).toString(cryptoJs.enc.Hex);
+          };
+        }]);
+  });
