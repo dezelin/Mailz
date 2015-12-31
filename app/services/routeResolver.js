@@ -69,7 +69,6 @@ define(
           var fileName = baseName.toLowerCase();
           routeDef.templateUrl = routeConfig.getViewsDirectory() + path + fileName + '.html';
           routeDef.controller = baseName + 'Controller';
-          console.log('Secure: ' + secure);
           routeDef.secure = (secure) ? secure : false;
           routeDef.resolve = {
             load: ['$q', '$rootScope', function($q, $rootScope) {
