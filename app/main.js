@@ -10,10 +10,11 @@ require.config({
   paths: {
     'addressparser': 'components/addressparser/src/addressparser',
     'angular': 'components/angular/angular.min',
+    'angular-block-ui': 'components/angular-block-ui/dist/angular-block-ui.min',
     'angular-bootstrap': 'components/angular-bootstrap/ui-bootstrap-tpls.min',
     'angular-messages': 'components/angular-messages/angular-messages.min',
     'angular-route': 'components/angular-route/angular-route.min',
-    'axe': 'components/axe-core/axe.min',
+    'axe': 'components/axe/axe',
     'browserbox': 'components/browserbox/src/browserbox',
     'browserbox-compression': 'components/browserbox/src/browserbox-compression',
     'browserbox-imap': 'components/browserbox/src/browserbox-imap',
@@ -38,6 +39,10 @@ require.config({
     'angular': {
       exports: 'angular'
     },
+    'angular-block-ui': {
+      exports: 'angular-block-ui',
+      deps: ['angular']
+    },
     'angular-bootstrap': {
       exports: 'angular-bootstrap',
       deps: ['angular']
@@ -58,6 +63,13 @@ require.config({
     },
     'forge': {
       exports: 'forge'
+    },
+    'tcp-socket-tls': {
+      exports: 'tcp-socket-tls'
+    },
+    'tcp-socket': {
+      exports: 'tcp-socket',
+      deps: ['tcp-socket-tls', 'forge']
     }
   }
 });

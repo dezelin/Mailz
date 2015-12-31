@@ -9,11 +9,12 @@
   "dependencies": {
     "addressparser": "*",
     "angular": "*",
+    "angular-block-ui": "*",
     "angular-bootstrap": "*",
     "angular-messages": "*",
     "angular-mocks": "*",
     "angular-route": "*",
-    "axe-core": "*",
+    "axe": "https://github.com/whiteout-io/axe.git",
     "bootstrap": "*",
     "bootstrap-select": "*",
     "browserbox": "https://github.com/whiteout-io/browserbox.git",

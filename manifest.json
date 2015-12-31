@@ -11,21 +11,17 @@
     "128": "assets/icon_128.png"
   },
 
-  /* FIXME: For development
   "app": {
     "background": {
       "scripts": ["background.js"]
     }
   },
-  */
-  
-  "permissions": [
-    "storage" 
-  ],
 
-  // FIXME: For development
-  "web_accessible_resources": [
-    "app/test/index.html",
-    "app/test/spec/services/*"
+  "permissions": [
+    "storage",
+    "experimental",
+    {
+      "socket": [ "tcp-connect:*:*" ]
+    }
   ]
 }

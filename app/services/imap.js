@@ -15,8 +15,9 @@ define(
       [
         '$log',
         '$q',
+        '$timeout',
 
-        function($log, $q) {
+        function($log, $q, $timeout) {
           var self = this;
 
           self.SECURITY_NONE = 'None';
@@ -79,14 +80,19 @@ define(
               }
             });
             client.onerror = function(error) {
+              client.close();
               p.reject(error);
             };
             client.onclose = function() {
+              client.close();
               p.resolve();
             };
             client.onauth = function() {
+              client.close();
               p.resolve();
             };
+
+            $timeout(client.connect());
             return p.promise;
           };
         }]);

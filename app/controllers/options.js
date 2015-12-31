@@ -5,6 +5,7 @@
 define(
   [
     'app',
+    'angular-block-ui',
     'services/imap'
   ],
 
@@ -165,9 +166,11 @@ define(
       [
         '$scope',
         '$log',
+        '$timeout',
+        'blockUI',
         'imapService',
 
-        function($scope, $log, imapService) {
+        function($scope, $log, $timeout, blockUI, imapService) {
           $scope.securityProtocols = imapService.availableSecurityProtocols();
           $scope.authenticationMethods = imapService.availableAuthenticationMethods();
 
@@ -192,19 +195,24 @@ define(
 
           $scope.reload = function() {
             // Schedule update for the next tick
-            setTimeout(function() {
+            $timeout(function() {
               $scope.$apply(function() {
                 $scope.account = $scope.accounts.list[$scope.accounts.selectedAccount()];
                 $scope.account.imap = $scope.account.imap || imapService.defaultSettings();
               });
-            }, 0);
+            });
           };
 
           $scope.test = function() {
+            // Block UI
+            blockUI.start('Testing connection...');
             imapService.test($scope.account.imap).then(function(result) {
+              $timeout(blockUI.stop, 1000);
               $log.info('Testing IMAP settings passed.');
             }, function(error) {
-              $log.error('Testing IMAP settings failed: ' + error);
+              blockUI.message(error.message);
+              $timeout(blockUI.stop, 4000);
+              $log.error('Testing IMAP settings failed. ' + error);
             });
           };
 

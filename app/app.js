@@ -9,6 +9,10 @@ var APPLICATION_VERSION = '0.0.1';
 define(
   [
     'angular',
+    'angular-block-ui',
+    'angular-bootstrap',
+    'angular-messages',
+    'angular-route',
     'services/routeResolver'
   ],
   function(angular) {
@@ -17,6 +21,7 @@ define(
         'ngRoute',
         'ngMessages',
         'ui.bootstrap',
+        'blockUI',
         'routeResolverService'
       ]);
 
