@@ -1,7 +1,7 @@
 'use strict';
 
-/* global angular */
 /* global define */
+/* global require */
 
 var APPLICATION_NAME = 'MailzApp';
 var APPLICATION_VERSION = '0.0.1';
@@ -69,12 +69,14 @@ define(
         // Client-side security. Server-side framework MUST add it's
         // own security as well since client-based security is easily hacked
         $rootScope.$on('$routeChangeStart', function(event, next) {
-          var authenticationService = require(['services/authentication']);
-          if (next && next.$$route && next.$$route.secure) {
-            if (!authenticationService.isUserAuthenticated()) {
-              authenticationService.redirectToLogin();
+          require(['services/authentication'], function(mod) {
+            var authenticationService = $injector.get('authenticationService');
+            if (next && next.$$route && next.$$route.secure) {
+              if (!authenticationService.isUserAuthenticated()) {
+                authenticationService.redirectToLogin();
+              }
             }
-          }
+          });
         });
       }
     ]);
