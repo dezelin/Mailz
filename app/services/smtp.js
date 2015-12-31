@@ -7,11 +7,11 @@
 define(
   [
     'app',
-    'browserbox'
+    'smtpclient'
   ],
 
-  function(app, browserbox) {
-    app.register.service('imapService',
+  function(app) {
+    app.register.service('smtpService',
       [
         '$log',
         '$q',
@@ -30,14 +30,12 @@ define(
           self.AUTHENTICATION_TLSCERT = 'TLS certificate';
           self.AUTHENTICATION_OAUTH2 = 'OAuth2';
 
-          var BrowserBox = require('browserbox');
-
           self.defaultSettings = function() {
             return {
               username: '',
               password: '',
               address: '',
-              port: 143,
+              port: 25,
               protocol: self.SECURITY_NONE,
               authentication: self.AUTHENTICATION_PLAIN
             };
@@ -46,13 +44,13 @@ define(
           self.availableSecurityProtocols = function() {
             return [{
               name: 'None',
-              port: 143
+              port: 25
             }, {
               name: 'STARTTLS',
-              port: 143
+              port: 587
             }, {
               name: 'SSL/TLS',
-              port: 993
+              port: 465
             }];
           };
 
@@ -67,9 +65,11 @@ define(
             ];
           };
 
+          var SmtpClient = require('smtpclient');
+
           self.test = function(options) {
             var p = $q.defer();
-            var client = new BrowserBox(options.address, options.port, {
+            var client = new SmtpClient(options.address, options.port, {
               auth: {
                 user: options.username,
                 pass: options.password
@@ -90,8 +90,8 @@ define(
               client.close();
               p.resolve();
             };
-            client.onauth = function() {
-              client.close();
+            client.onidle = function() {
+              client.quit();
               p.resolve();
             };
 

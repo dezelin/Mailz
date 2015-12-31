@@ -20,5 +20,9 @@ define(
       self.getUser = function() {
         return self.user;
       };
+
+      self.isUserAuthenticated = function() {
+        return self.user !== undefined;
+      };
     });
   });

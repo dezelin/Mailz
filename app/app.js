@@ -50,7 +50,7 @@ define(
         // Define routes
         $routeProvider
           .when('/', {redirectTo: '/login'})
-          .when('/inbox', route.resolve('Inbox'))
+          .when('/inbox', route.resolve('Inbox', '', true))
           .when('/login', route.resolve('Login'))
           .when('/signup', route.resolve('Signup'))
           .otherwise({redirectTo: '/'});
@@ -59,27 +59,25 @@ define(
       }
     ]);
 
-    /*
     app.run([
       '$q',
-      'use$q',
       '$rootScope',
       '$location',
-      'authService',
+      '$injector',
 
-      function($q, use$q, $rootScope, $location, authService) {
+      function($q, $rootScope, $location, $injector) {
         // Client-side security. Server-side framework MUST add it's
         // own security as well since client-based security is easily hacked
         $rootScope.$on('$routeChangeStart', function(event, next) {
+          var authenticationService = require(['services/authentication']);
           if (next && next.$$route && next.$$route.secure) {
-            if (!authService.user.isAuthenticated) {
-              authService.redirectToLogin();
+            if (!authenticationService.isUserAuthenticated()) {
+              authenticationService.redirectToLogin();
             }
           }
         });
       }
     ]);
-    */
 
     return app;
   });

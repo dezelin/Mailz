@@ -26,6 +26,7 @@
     "mimefuncs": "*",
     "requirejs": "*",
     "requirejs-domready": "*",
+    "smtpclient": "https://github.com/whiteout-io/smtpclient.git",
     "stringencoding": "https://github.com/whiteout-io/stringencoding.git",
     "tcp-socket": "https://github.com/whiteout-io/tcp-socket.git",
     "utf7": "*"

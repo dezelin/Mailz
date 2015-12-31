@@ -6,7 +6,10 @@ define(
   [
     'app',
     'angular-block-ui',
-    'services/imap'
+    'angular-bootstrap',
+    'services/imap',
+    'services/modals',
+    'services/smtp'
   ],
 
   function(app) {
@@ -236,9 +239,70 @@ define(
       [
         '$scope',
         '$log',
+        '$timeout',
+        'blockUI',
+        'smtpService',
 
-        function($scope, $log) {
+        function($scope, $log, $timeout, blockUI, smtpService) {
+          $scope.securityProtocols = smtpService.availableSecurityProtocols();
+          $scope.authenticationMethods = smtpService.availableAuthenticationMethods();
 
+          $scope.account = $scope.account || {};
+          $scope.account.smtp = $scope.account.smtp || {};
+          $scope.account.smtp.protocol = $scope.account.smtp.protocol || $scope.securityProtocols[0].name;
+
+          $scope.$watch('account.smtp.protocol', function(newValue, oldValue) {
+            if (oldValue === undefined || newValue === undefined ||
+              oldValue === newValue) {
+              return;
+            }
+
+            // $scope.account.smtp.protocol has already been set to the new value in the view
+            for (var i = 0; i < $scope.securityProtocols.length; ++i) {
+              if ($scope.securityProtocols[i].name === newValue) {
+                $scope.account.smtp.port = $scope.securityProtocols[i].port;
+                break;
+              }
+            }
+          });
+
+          $scope.reload = function() {
+            // Schedule update for the next tick
+            $timeout(function() {
+              $scope.$apply(function() {
+                $scope.account = $scope.accounts.list[$scope.accounts.selectedAccount()];
+                $scope.account.smtp = $scope.account.smtp || smtpService.defaultSettings();
+              });
+            });
+          };
+
+          $scope.test = function() {
+            // Block UI
+            blockUI.start('Testing connection...');
+            smtpService.test($scope.account.smtp).then(function(result) {
+              $timeout(blockUI.stop, 1000);
+              $log.info('Testing SMTP settings passed.');
+            }, function(error) {
+              blockUI.message(error.message);
+              $timeout(blockUI.stop, 4000);
+              $log.error('Testing SMTP settings failed. ' + error);
+            });
+          };
+
+          $scope.reloadHandler = function() {
+            $scope.reload();
+          };
+
+          $scope.testHandler = function() {
+            $scope.test();
+          };
+
+          // Handle test broadcasts
+          $scope.$on('test', $scope.testHandler);
+
+          // Reload account data on model change
+          $scope.$on('reloadAccount', $scope.reloadHandler);
+          $scope.reload();
         }]);
 
     app.register.controller('OptionsAccountsCompositionController',

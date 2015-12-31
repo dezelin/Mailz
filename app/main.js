@@ -3,7 +3,7 @@
 /* global angular */
 /* global document */
 require.config({
-  baseUrl: '/app',
+  baseUrl: 'app',
   urlArgs: 'v=1.0',
 
   // Alias library paths
@@ -28,6 +28,8 @@ require.config({
     'imap-formal-syntax': 'components/imapHandler/src/imap-formal-syntax',
     'imap-parser': 'components/imapHandler/src/imap-parser',
     'mimefuncs': 'components/mimefuncs/src/mimefuncs',
+    'smtpclient': 'components/smtpclient/src/smtpclient',
+    'smtpclient-response-parser': 'components/smtpclient/src/smtpclient-response-parser',
     'stringencoding': 'components/stringencoding/dist/stringencoding.min',
     'tcp-socket': 'components/tcp-socket/src/tcp-socket',
     'tcp-socket-tls': 'components/tcp-socket/src/tcp-socket-tls',
@@ -63,13 +65,6 @@ require.config({
     },
     'forge': {
       exports: 'forge'
-    },
-    'tcp-socket-tls': {
-      exports: 'tcp-socket-tls'
-    },
-    'tcp-socket': {
-      exports: 'tcp-socket',
-      deps: ['tcp-socket-tls', 'forge']
     }
   }
 });
@@ -80,9 +75,9 @@ require(
     'angular-bootstrap',
     'angular-messages',
     'angular-route',
-    'app',
-    'services/routeResolver'
+    'services/routeResolver',
+    'app'
   ],
-  function() {
+  function(angular) {
     angular.bootstrap(document, ['MailzApp']);
   });

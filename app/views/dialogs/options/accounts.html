@@ -18,7 +18,7 @@
             </uib-accordion-heading>
             <ul class="nav nav-pills nav-stacked">
               <li role="menuitem" class="nav-item" ng-repeat="page in pageTemplates" ng-class="{ 'active': $index === accounts.pageIdx }">
-                <a href="#" class="nav-link" ng-click="accounts.clickPageLink($index)">{{page.name}}</a>
+                <a class="nav-link" ng-click="accounts.clickPageLink($index)">{{page.name}}</a>
               </li>
             </ul>
           </uib-accordion-group>
@@ -31,7 +31,7 @@
           </button>
           <ul class="uib-dropdown-menu" role="menu" aria-labelledby="action-button">
             <li role="menuitem" ng-repeat="action in actionButton.actions" ng-class="{ 'disabled': !action.enabled() }">
-              <a href="#" ng-click="actionButton.click($index)">{{action.name}}</a>
+              <a ng-click="actionButton.click($index)">{{action.name}}</a>
             </li>
           </ul>
         </div>
