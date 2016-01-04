@@ -23,6 +23,7 @@
     "imapclient": "https://github.com/whiteout-io/imap-client.git",
     "imapHandler": "*",
     "jasmine": "*",
+    "lodash": "*",
     "mimefuncs": "*",
     "requirejs": "*",
     "requirejs-domready": "*",

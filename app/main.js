@@ -27,6 +27,7 @@ require.config({
     'imap-handler': 'components/imapHandler/src/imap-handler',
     'imap-formal-syntax': 'components/imapHandler/src/imap-formal-syntax',
     'imap-parser': 'components/imapHandler/src/imap-parser',
+    'lodash': 'components/lodash/lodash.min',
     'mimefuncs': 'components/mimefuncs/src/mimefuncs',
     'smtpclient': 'components/smtpclient/src/smtpclient',
     'smtpclient-response-parser': 'components/smtpclient/src/smtpclient-response-parser',

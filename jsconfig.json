@@ -2,5 +2,10 @@
     "compilerOptions": {
         "target": "ES6",
         "module": "Mailz"
-    }
+    },
+    "files:": [
+      "typings/angularjs/angular.d.ts",
+      "typings/jasmine/jasmine.d.ts",
+      "typings/lodash/lodash.d.ts"
+    ]
 }

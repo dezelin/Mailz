@@ -4,6 +4,7 @@
 
 define(
   [
+    'lodash',
     'app',
     'angular-block-ui',
     'angular-bootstrap',
@@ -12,10 +13,10 @@ define(
     'services/smtp'
   ],
 
-  function(app) {
+  function(_, app) {
     app.register.controller('OptionsController',
 
-      function($scope, $log, $uibModalInstance, context) {
+      function($scope, $log, $uibModalInstance, _context_) {
         $scope.tabs = [{
           title: 'Personal',
           templateUrl: 'app/views/dialogs/options/personal.html',
@@ -28,7 +29,26 @@ define(
           templateUrl: 'app/views/dialogs/options/accounts.html'
         }];
 
-        $scope.context = context;
+        // Copy object as user might discard changes
+        $scope.context = Object.create(_context_);
+        $scope.context.accounts = $scope.context.accounts || [];
+
+        $scope.ok = function() {
+          $scope.context.accounts = _.map($scope.context.accounts, function(acc) {
+            return {
+              imap: acc.imap,
+              smtp: acc.smtp,
+              composition: acc.composition,
+              security: acc.security
+            };
+          });
+          $uibModalInstance.close($scope.context);
+        };
+
+        $scope.cancel = function() {
+          $uibModalInstance.dismiss('cancel');
+        };
+
       });
 
     app.register.controller('OptionsAccountsController',
